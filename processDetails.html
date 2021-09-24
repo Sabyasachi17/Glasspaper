@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GLASSPAPER</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+  <metahttp-equiv='X-UA-Compatible'content='IE=edge'>
+	<title>GlassPaper</title>
+	<metaname='viewport'content='width=device-width,initial-scale=1'>
+	<script src='node_modules/web3.js-browser/build/web3.js'></script>
+	<script src="./node_modules/web3/dist/web3.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  </head>
+  <body>
+    <div class="container">
+      <h1 style="text-align: center;">Glasspaper Supply Chain</h1>
+      <hr>
+      <p style="text-align: center;">Prove the authenticity of your products using the Ethereum blockchain</p>
+    </div>
+
+    <div id="ftc-harvest">
+      <h2>Process Details</h2>
+      <div class="form-group">
+          Enter the hash of Process
+          <br>
+    
+          <input type="text" id="productPrice3" name="productPrice" value="0x23567"><br>
+          
+          <br>
+          <h4 id="instructor"></h2>
+          
+          <h4 id="instructor1"></h2>
+          
+          <h4 id="instructor2"></h2>
+          
+          <h4 id="instructor3"></h2>
+          <br>
+          <button class="btn-buy" id="button" type="button">Get Info</button>
+      </div>
+      <div class=form-break></div>
+      <hr>
+    </div>
+    <script>
+
+      /*   window.addEventListener('load', () => {
+        if (typeof web3 !== 'undefined') {
+            web3 = new Web3(web3.currentProvider);
+        } else {
+            console.log('No web3? You should consider trying MetaMask!');
+            web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:7545'));
+        }
+    });
+    
+    */
+          //   else {
+    
+                // console.log("Install MetaMask");
+    
+                 web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7545"));
+    
+             
+        
+    let addr;
+        
+         web3.eth.getAccounts().then(accounts =>
+         {
+          //console.log(accounts);
+          addr = accounts;
+          //console.log("$$$");
+          console.log(addr[0]);
+          web3.eth.defaultAccount =addr[0];
+        });
+      
+              var Contract1 = new web3.eth.Contract([
+      {
+        "inputs": [],
+        "stateMutability": "nonpayable",
+        "type": "constructor"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "string",
+            "name": "",
+            "type": "string"
+          },
+          {
+            "indexed": false,
+            "internalType": "string",
+            "name": "",
+            "type": "string"
+          },
+          {
+            "indexed": false,
+            "internalType": "string",
+            "name": "",
+            "type": "string"
+          }
+        ],
+        "name": "Processhmade",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "internalType": "bytes32",
+            "name": "",
+            "type": "bytes32"
+          }
+        ],
+        "name": "processhash",
+        "type": "event"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "manuf",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "serial_number",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "process_type",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "creation_date",
+            "type": "string"
+          }
+        ],
+        "name": "buildProcess",
+        "outputs": [
+          {
+            "internalType": "bytes32",
+            "name": "",
+            "type": "bytes32"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "string",
+            "name": "serial_number",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "product_type",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "creation_date",
+            "type": "string"
+          },
+          {
+            "internalType": "bytes32[]",
+            "name": "process_array",
+            "type": "bytes32[]"
+          }
+        ],
+        "name": "buildProduct",
+        "outputs": [
+          {
+            "internalType": "bytes32",
+            "name": "",
+            "type": "bytes32"
+          }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "a1",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "s1",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "s2",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "s3",
+            "type": "string"
+          }
+        ],
+        "name": "concatenateInfoAndHash",
+        "outputs": [
+          {
+            "internalType": "bytes32",
+            "name": "",
+            "type": "bytes32"
+          }
+        ],
+        "stateMutability": "pure",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "bytes32",
+            "name": "product_hash",
+            "type": "bytes32"
+          }
+        ],
+        "name": "getProcess",
+        "outputs": [
+          {
+            "internalType": "bytes32[]",
+            "name": "",
+            "type": "bytes32[]"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "bytes32",
+            "name": "",
+            "type": "bytes32"
+          }
+        ],
+        "name": "processes",
+        "outputs": [
+          {
+            "internalType": "address",
+            "name": "manufacturer",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "serial_number",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "process_type",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "creation_date",
+            "type": "string"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "inputs": [
+          {
+            "internalType": "bytes32",
+            "name": "",
+            "type": "bytes32"
+          }
+        ],
+        "name": "products",
+        "outputs": [
+          {
+            "internalType": "address",
+            "name": "manufacturer",
+            "type": "address"
+          },
+          {
+            "internalType": "string",
+            "name": "serial_number",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "product_type",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "creation_date",
+            "type": "string"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      }
+    ],'0xcCaAA2F845f0AF941B95B76FFE9DB97d5fAD2389');
+    var a1 = $("#fno").val();
+	//var a2 = $("#lno").val();
+	//var a3 = $("#lno1").val();
+	//var a4 = $("#lno2").val();
+  //  var a5= $("#lno2").val();
+
+
+	
+        $("#button").click( async function() {
+			var a1 =await $("#productPrice3").val();
+		//var a2 = await $("#lno").val();
+		//var a3 = await $("#lno1").val();
+       // var a4 = await $("#lno2").val();
+        //var a5= await $("#lno3").val();
+		//let a6 = a5.split(",");
+
+		console.log(a1);
+		//console.log(a2);
+		//console.log(a3);
+	//	console.log(a4);
+       // console.log(a5);
+
+            //Contract1.methods.buildProduct(a2,a3,a4,a6)
+            //.send({from:'0x756C66210704ed4Fa3f7dCefdD5930b679456ca4',gas:8900000000009090}).then(console.log("done"))
+            let result=await Contract1.methods.processes(a1).call();
+            console.log(result)
+            $("#instructor").html("creation_date:->"+result[3]);
+            $("#instructor1").html("Manufacturer:->"+result[0]);
+            $("#instructor2").html("process type:->"+result[2]);
+            $("#instructor3").html("serial no:->"+result[1]);
+                   
+           /* var serial = document.getElementById("process-hash").value
+             if (serial != "") {
+            //Then the process that will be used in the product 
+            var part_array = []
+            for (var i = 0; i < part_list.length; i++) {
+                part_array.push(part_list[i].textContent)
+            }
+            */
+
+				//	let result=await Contract1.methods.concatenateInfoAndHash(a1,a2,a3,a4).call();
+				//	console.log(result);
+				//{//
+           
+                   //$("#instructor").html(result);
+                    //console.log(result);
+
+                
+           
+       });
+
+		
+        
+    </script>
